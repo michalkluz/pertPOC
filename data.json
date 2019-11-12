@@ -1,0 +1,20 @@
+{
+    "lastUpdated": "4.20.1337",
+    "isAwesome": true,
+    "data": [{
+        "size": "XS",
+        "completionTimes": [1, 1, 2, 2, 2, 3, 3, 4, 7]     
+    },{
+        "size": "S",
+        "completionTimes": [3, 3, 4, 4, 5, 5, 6, 7, 8, 11]
+    },{
+        "size": "M",
+        "completionTimes": [2, 3, 4, 5, 5, 6, 7, 8, 9, 10]
+    },{
+        "size": "L",
+        "completionTimes": [3, 4, 5, 5, 8, 10, 11, 12, 12]
+    },{
+        "size": "XL",
+        "completionTimes": [5, 6, 6, 7, 8, 10, 13, 14, 15, 20]
+    }]
+}
