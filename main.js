@@ -73,8 +73,8 @@ var pertCDF = CalculateCDF(pertPDF);
 console.log(pertPDF);
 console.log(pertCDF);
 
-var ctx = document.getElementById('myChart').getContext('2d');
-var myChart = new Chart(ctx, {
+var PDFCtx = document.getElementById('PDF').getContext('2d');
+var PDFChart = new Chart(PDFCtx, {
     type: 'line',
     data: {
         labels: timeOfWork,
@@ -82,7 +82,15 @@ var myChart = new Chart(ctx, {
             label: 'PDF',
             data: pertPDF,
             borderWidth: 1
-        },{
+        }]
+    }
+});
+var CDFCtx = document.getElementById('CDF').getContext('2d');
+var CDFChart = new Chart(CDFCtx, {
+    type: 'line',
+    data: {
+        labels: timeOfWork,
+        datasets: [{
             label: 'CDF',
             data: pertCDF,
             borderWidth: 1

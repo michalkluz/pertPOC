@@ -1,0 +1,82 @@
+Plan prezentacji
+
+Wstęp o metodzie empirycznej?
+
+Założenia z których korzysta prezentacja:
+- estymacje są potrzebne dla biznesu żeby planowac działania
+
+Powszechne nieporozumienie (common misconception):
+Estymacja to nie liczba. Estymacja to rozkład prawdopodobieństwa.
+Jeśli na podstawie estymacji planujemy, to warto ten rozkład znać.
+Będę modyfikował swoje plany w zależności od tego czy 
+
+Planowanie może być bardziej skomplikowane. Informacja "zrobimy lub nie" to za mało, bo jaka jest szansa że zrobimy? 60% to co innego niż 95%. A jaka jest szansa ze nasza robota się przeciągnie? O 1 dzień? a o 5 dni? Jaka jest szansa że się nie wyrobimy do konkretnej daty? jeśli jest większa niż 60% to może nie chcemy ryzykować i lepiej zmienić nasz plan. Może jeśli wszystko pójdzie świetnie i zrobimy to zadanie bardzo szybko, może będziemy w stanie zrobić jeszcze te dwa zadania i zdążymy przed tą datą? Ale chcemy próbować tylko jeśli szansa na to wynosi niemniej niż 80%, bo inaczej nie ryzykujemy. I tak dalej.
+
+
+Przykłady:
+"Organizuje grilla i patrzę na prognozę pogody. Jeśli szansa na deszcz przez weekend wynosi 1% to zignoruję to. Jeśli 20% to wezmę parasolkę na wszelki wypadek. Jeśli 80%
+to przeniosę grilla na za tydzień."
+
+Poszukiwania dobrego modelu: Wybierzmy pasujacy model estymacji.
+Jeśli ktoś zna tzw Centralne Twierdzenie Graniczne, to nie będzie zaskoczeniem że zacznę poszukiwania modelu od rozkładu normalnego
+
+ewentualny szybki wstęp do CTG. Jeden rzut kością ma rozkład jednorodny (równomierny), 1/6 szansy na każdą z opcji, ale 10000 rzutów kością upodabnia się do rozkładu normalnego.
+
+Rozkład normalny to niezły początek, ale my na osi X nie mamy wyników rzutu kością, tylko mamy czas zrobienia zadania. Największe prawdopodobieństwo zrobienia zadania w ogólności nie musi być na środku. Bliższa przyszłość jest łatwiejsza do przewidzenia niż dalsza, dlatego może rozkład beta? To zmodyfikowany rozkłąd normalny o tzw. parametry kształtu. 
+Rozkład beta, zmiana skali na czasową
+Trochę lepiej. Teraz uwzględnijmy fakt że możemy estymować za pomocą subiektywnych odczuć ekspertów; eksperci mają pewną intuicję odnośnie tego ile coś zajmie, chciałbym żeby mój model to uwzględniał. 
+Rozkład PERT
+Widzimy że rozkład prawdopodobieństwa lepiej uwzględnia intuicję ekspertów. Ale dla mnie to wciąż jeszcze za mało, są przecież takie zadania z którymi eksperci czują się lepiej lub gorzej, mogą mieć większe doświadczenie z backendem a mniejsze z frontendem, swoich estymacji backendowych będą bardziej pewni niż frontendowych. Wprowadźmy parametr "pewności estymacji" który będzie to uwzględniał. 
+
+Zmodyfikowany rozkład PERT
+Widzimy jak rozkład się zmienia w zależności od tego jaką pewnością siebie dla danego zadania dysponują eksperci. Nieźle, to brzmi dobrze, dlatego przyjrzyjmy się bliżej temu modelowi.
+
+Zmodyfikowany rozkład PERT - jak to działa
+trzy wartości estymacji (everything will go right, generally speaking, everything will go wrong). A do tego parametr pewnosci siebie, na ile się zgadzamy z tymi estymacjami. 
+
+Jak odczytywać dane z tego wykresu? Jak odpowiadać na pytania zadawane przez biznes?
+PDF, pole pod wykresem to prawdopodobieństwo zrobienia zadania dla danego dnia
+CDF, wartosć wykresu to prawdopodobieństwo zrobienia zadania DO danego dnia
+
+
+
+Teoretycznie powinniśmy estymować dla każdego zadania każdą z tych wartości osobno, potem wyznaczać
+Ale jak to zaproponuję to wiem co powiecie:
+- "Fizyk, to za skomplikowane"
+- "już estymujemy w T shirt, nie chcemy tego zmieniać"
+- "meetingi takie długie"
+- "komu będzie się chciało to liczyć"
+- #qra #qra #golab
+
+Dlatego chciałbym zaproponować:
+AMTSSPERTE czyli Automated Modified T Shirt Sized PERT Extravaganza
+Jak to działa:
+Estymujemy bez zmian - w T shirt sized. Nie estymujemy ile zajmie dane zadanie, estymujemy tylko do jakiej "kategorii wielkości" dane zadanie należy.
+Potem jak zadanie jest skończone, sprawdzamy ile zajęło i zapisujemy osobno dla każdej kategorii wielkości.
+Czyli mamy dane w postaci: S - 2, 3, 3, 4, 5, 6, 6, 6, 6, 9, 10, 12
+Najkrótszy czas zrobienia zadania w danej kategorii będzie dla niej parametrem optymistycznym, najdłuższy parametrem pesymistycznym, najczęściej występujacy czas (dominanta albo moda) będzie parametrem mody. Jeśli moda jest silna (czas wykonania zadania występuje często) to parametr pewności siebie będzie wysoki, jeśli rzadko to 
+
+Zespół pracował przez trzy miesiące i wykonał 20 zadań w kategorii S. Uwaga, oceniamy cały proces, nie tylko implementację! Od startu pracy do Done!
+Najszybciej udało się zrobić jedno z nich w dwa dni (S_optimistic = 2). Najwolniej robiliśmy zadanie w dwa tygodnie (S_pesimistic = 10). Ale najczęściej zdarzało się że robiliśmy je w 5 dni (S_mode = 5), bo aż sześć zadań spośród tych dwudziestuzrobiliśmy w 5 dni (confidence = ???). 
+
+
+
+Przewidywania:
+Scrum przewiduje że estymacje danego zespołu będą coraz lepsze.
+Po czym poznać że nasze estymacje są coraz lepsze i coraz bardziej godne zaufania? Jak to sprawdzić?
+
+Zwiększanie się mody
+Przybliżanie się parametrów optymistycznego i pesymistycznego
+przede wszystkim zmniejszanie się odchylenia standardowego w czasie
+
+zalety
+nienaiwne estymacje dostarczajace znacznie więcej informacji
+praktycznie żadnego dodatkowego wkładu od deweloperów
+feedback loop, przepis na weryfikację czy nasze estymacje się poprawiają
+
+
+Automatyzacja 
+
+
+
+Nie bójmy się szukać sposobów na ulepszenie tego jak pracujemy, standardy branżowe i utarte sposoby pracy nie posiadają jeszcze wszystkich odpowiedzi i miejsca do poprawy jest jeszcze dużo, nie bójmy się uczyć nowych rzeczy, nie bójmy się korzystać z matematyki
