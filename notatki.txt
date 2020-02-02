@@ -80,3 +80,18 @@ Automatyzacja
 
 
 Nie bójmy się szukać sposobów na ulepszenie tego jak pracujemy, standardy branżowe i utarte sposoby pracy nie posiadają jeszcze wszystkich odpowiedzi i miejsca do poprawy jest jeszcze dużo, nie bójmy się uczyć nowych rzeczy, nie bójmy się korzystać z matematyki
+
+
+
+
+Azure Devops lead time - od założenia itemu do skończenia
+Cycle Time - od rozpoczęcia pracy do zakończenia pracy
+takt time - od rozpoczęcia pracy do rozpoczęcia pracy nad następnym
+
+plan działania:
+- wprowadzić rozsądniejszy system refinementu / estymacji
+- rozpocząc zbieranie danych, update boarda
+- sprawdzić jakość estymacji (korelacja między cycle time a T shirt size)
+    - korelacja wystarczająco wysoka
+    - korelacja niewystarczająco wysoka
+- PERTem 

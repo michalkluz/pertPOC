@@ -5,17 +5,15 @@ var dataset = require('./data.json');
 function ParseData(dataset){
     var data = dataset.data;
     var opt = 0;
-    var mode = 0;
     var pes = 0;
     data.forEach(function(value){
         if(value.size == "XS"){
             opt = Math.min(...value.completionTimes);
-            mode = 2;
             pes = Math.max(...value.completionTimes);
         }
     })
 
-    return [opt, mode, pes];
+    return [opt, pes];
 }
 
 function GenerateTimeOfWork(opt, pes){
@@ -54,12 +52,21 @@ function CalculateCDF(densityFunction){
 }
 
 //data
-var opt = 2*8;
-var mode = 4*8;
-var pes = 10*8;
-var delta = 4;
-//var [opt, mode, pes] = ParseData(dataset);
+//var standardDeviation = GetStandardDeviation();
+//var expectedValue = GetExpectedValue();
+var standardDeviation2 = 2.41;
+var expectedValue2 = 5.44;
+//var opt = 2*8;
+//var mode = 4*8;
+//var pes = 10*8;
 
+//var delta = 4;
+var [opt, pes] = ParseData(dataset);
+var delta = (pes - opt)/standardDeviation2 - 2;
+var deltaPrim = (pes - opt) / standardDeviation2;
+var mode = (expectedValue2 * deltaPrim - pes - opt)/(deltaPrim - 2)
+
+console.log(mode);
 var expectedValue = (opt + delta * mode + pes ) / (2 + delta);
 var standardDeviation = (pes - opt) / (2 + delta);
 console.log("Expected value: " + expectedValue + " with delta = " + delta);
