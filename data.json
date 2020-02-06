@@ -3,7 +3,7 @@
     "isAwesome": true,
     "data": [{
         "size": "XS",
-        "completionTimes": [1, 2, 5, 5, 6, 7, 7, 7, 9]     
+        "completionTimes": [1, 2, 2, 2, 2, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 3, 4, 4, 4, 4, 4, 4, 4, 4, 4, 4, 5, 6, 7, 7, 7, 9]     
     },{
         "size": "S",
         "completionTimes": [3, 3, 4, 4, 5, 5, 6, 7, 8, 11]

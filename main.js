@@ -6,14 +6,20 @@ function ParseData(dataset){
     var data = dataset.data;
     var opt = 0;
     var pes = 0;
+    var completionTimes = [];
     data.forEach(function(value){
         if(value.size == "XS"){
             opt = Math.min(...value.completionTimes);
             pes = Math.max(...value.completionTimes);
+            completionTimes = value.completionTimes;
         }
     })
 
-    return [opt, pes];
+    var completionTimesCount = completionTimes.length;
+    var expectedValue = completionTimes.reduce((a,b) => a + b, 0) / completionTimesCount;
+    var standardDeviation = Math.sqrt(completionTimes.reduce((sq, n) => sq + Math.pow(n - expectedValue, 2), 0) / (completionTimesCount - 1));
+
+    return [opt, pes, expectedValue, standardDeviation];
 }
 
 function GenerateTimeOfWork(opt, pes){
@@ -52,31 +58,23 @@ function CalculateCDF(densityFunction){
 }
 
 //data
-//var standardDeviation = GetStandardDeviation();
-//var expectedValue = GetExpectedValue();
-var standardDeviation2 = 2.41;
-var expectedValue2 = 5.44;
-//var opt = 2*8;
-//var mode = 4*8;
-//var pes = 10*8;
+var [opt, pes, expectedValue, standardDeviation] = ParseData(dataset);
+var delta = (pes - opt)/standardDeviation - 2;
+var mode = expectedValue + (2 * expectedValue - opt - pes) / delta;
 
-//var delta = 4;
-var [opt, pes] = ParseData(dataset);
-var delta = (pes - opt)/standardDeviation2 - 2;
-var deltaPrim = (pes - opt) / standardDeviation2;
-var mode = (expectedValue2 * deltaPrim - pes - opt)/(deltaPrim - 2)
-
-console.log(mode);
-var expectedValue = (opt + delta * mode + pes ) / (2 + delta);
-var standardDeviation = (pes - opt) / (2 + delta);
+console.log("Most likely time to complete the task: " + mode);
 console.log("Expected value: " + expectedValue + " with delta = " + delta);
 console.log("Standard deviation: " + standardDeviation);
+
+
+// https://dev.azure.com/michalkluz/LunchHunch/_apis/wit/workitems?ids=1&api-version=5.1
+// PAT ng5exbsqcnbklgljt7bzcw5rkv5yuifbhfrd7j2l3xnw3rk3laxa
+
 
 var timeOfWork = GenerateTimeOfWork(opt, pes);
 var [alfa1, alfa2, betaDistribution] = CalculateConstants(opt, mode, pes);
 var pertPDF = CalculatePDF(timeOfWork);
 var pertCDF = CalculateCDF(pertPDF);
-//var sum = densityFunction.reduce((a,b)=> a + b, 0);
 console.log(pertPDF);
 console.log(pertCDF);
 
